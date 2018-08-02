@@ -19,6 +19,7 @@ export class TabsPage {
   tab2: any = 'FilmsPage';
   tab3: any = 'PeoplePage';
   tab4: any = 'PlanetsPage';
+  tab5: any = 'AthletesPage';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

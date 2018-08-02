@@ -10,8 +10,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SwApiProvider {
 
-  private apiProxy = "/swapi";
-
   constructor(private http: HttpClient) {
     console.log('Hello SwApiProvider Provider');
   }
@@ -26,9 +24,5 @@ export class SwApiProvider {
 
   getPlanets() {
     return this.http.get("/api/planets/");
-  }
-
-  getCartola(){
-    return this.http.get(`/cartola/atletas/mercado`);
   }
 }

@@ -5,9 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { SwApiProvider } from '../providers/sw-api/sw-api';
+import { FavoriteProvider } from '../providers/favorite/favorite';
+import { CartolaProvider } from '../providers/cartola/cartola';
 
 @NgModule({
   declarations: [
@@ -15,8 +18,9 @@ import { SwApiProvider } from '../providers/sw-api/sw-api';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
     HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,8 +30,10 @@ import { SwApiProvider } from '../providers/sw-api/sw-api';
     StatusBar,
     SplashScreen,
     EmailComposer,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SwApiProvider
+    SwApiProvider,
+    FavoriteProvider,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    CartolaProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }
