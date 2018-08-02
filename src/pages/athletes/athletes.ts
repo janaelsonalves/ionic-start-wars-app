@@ -18,15 +18,43 @@ import { Observable } from 'rxjs';
 export class AthletesPage {
 
   mercado: Observable<any>
+  isLoading: boolean = true;
 
   athletes: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, private cartola: CartolaProvider) {
-    this.mercado = this.cartola.getMarketData();
   }
 
-  ionViewDidLoad() {
+  /* ionViewDidLoad() {
     console.log('ionViewDidLoad AthletesPage');
+  } */
+
+  ionViewDidLoad() {
+    let loader = this.loadingCtrl.create({
+      content: 'Por favor, aguarde...',
+    });
+
+    loader.present().then(() => {
+      this.cartola.getMarketData()
+        .subscribe(results => {
+          this.athletes = results.atletas;
+        });
+      loader.dismiss();
+    });
+  }
+
+  presentLoadingDefault() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loading.present().then(() => {
+      /* this.mercado = this.cartola.getMarketData() */
+      this.cartola.getMarketData().subscribe(results => {
+        this.athletes = results.atletas;
+      });
+      loading.dismiss();
+    });
   }
 
   openDetails(athlete: any) {

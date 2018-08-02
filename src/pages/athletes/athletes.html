@@ -19,7 +19,8 @@
   Atletas: {{athletes}} -->
 
   <ion-list>
-    <button ion-item *ngFor="let athlete of (mercado | async)?.atletas" (click)="openDetails(athlete)">
+    <!-- <button ion-item *ngFor="let athlete of (mercado | async)?.atletas" (click)="openDetails(athlete)"> -->
+    <button ion-item *ngFor="let athlete of athletes" (click)="openDetails(athlete)">
       <ion-avatar item-start>
         <img [src]="getFormattedImage(athlete?.foto)">
       </ion-avatar>
