@@ -10,6 +10,10 @@
     <ion-title>Atletas</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top>
+    <ion-searchbar placeholder="Filter Items" (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
+
 </ion-header>
 
 
@@ -24,7 +28,19 @@
       <ion-avatar item-start>
         <img [src]="getFormattedImage(athlete?.foto)">
       </ion-avatar>
-      {{ athlete.apelido }}
+      <ion-row>
+        <div item-end style="width: 15px; height: 15px;">
+          <img [src]="findTeamById(athlete?.clube_id)?.escudos['30x30']">
+        </div>
+        <ion-col>
+          <ion-row class="athlete-name">
+            {{ athlete?.apelido }}
+          </ion-row>
+          <ion-row class="position-name" style="font-style: italic; font-size: 0.5em">
+            {{ findPositionById(athlete?. posicao_id)?.nome }}
+          </ion-row>
+        </ion-col>
+      </ion-row>
     </button>
   </ion-list>
 

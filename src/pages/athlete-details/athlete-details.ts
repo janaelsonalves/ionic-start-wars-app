@@ -32,4 +32,63 @@ export class AthleteDetailsPage {
       return '';
     }
   }
+
+  /* getScores(scouts: any) {
+    let scores: any[] = [];
+    for (const key in scouts) {
+      let quantity = scouts[key];
+      let scout = this.getScoutBySigla(key);
+      let total = this.getScoreByScout(quantity, scout.pontos);
+      scores.push({
+        scout: scout,
+        quantity: quantity,
+        total: total
+      })
+    }
+    return scores;
+  }
+
+  getNegativeScore() {
+    return this.scores.filter(x => x.total < 0)
+      .reduce((acc, obj) => {
+        return acc + obj.total;
+      }, 0)
+  }
+
+  getPositiveScore() {
+    return this.scores.filter(x => x.total >= 0)
+      .reduce((acc, obj) => {
+        return acc + obj.total;
+      }, 0);
+  }
+
+  getScoutBySigla(sigla: string): Scout {
+    try {
+      return SCOUTS.find(x => x.sigla == sigla);
+    } catch (error) {
+      return null;
+    }
+  } */
+
+  getScoreByScout(quantity: number, value: number): number {
+    return quantity * value;
+  }
+
+  getTotalScore(): number {
+    /* try {
+      return this.scores.reduce((acc, obj) => {
+        return acc + obj.total;
+      }, 0)
+    } catch (error) { */
+    return this.athlete.media_num * this.athlete.jogos_num;
+    //}
+  }
+
+  isEmpty(obj: any) {
+    if (obj == null) {
+      return true;
+    } else {
+      return Object.keys(obj).length == 0;
+    }
+  }
 }
