@@ -35,7 +35,7 @@ $app-direction: ltr;
 
 $colors: (
   primary:    #1c1e22,
-  secondary:  #92f02d,
+  secondary:  #ff7400, /*92f02d*/
   danger:     #f53d3d,
   light:      #c8c8c8,
   dark:       #2d2e30,
@@ -50,13 +50,13 @@ $tabs-background: color($colors, primary);
 $background-color: color($colors, dark);
 $list-border-color: color($colors, light);
 $text-color: #fff;
-$toolbar-background: color($colors, dark);
+//$toolbar-background: color($colors, dark);
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 $card-ios-header-color: #fff;
-$searchbar-ios-toolbar-input-background: color($colors, clear);
+//$searchbar-ios-toolbar-input-background: color($colors, clear);
 
 
 

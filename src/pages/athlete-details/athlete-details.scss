@@ -1,9 +1,9 @@
 page-athlete-details {
     .athlete-card {
-        background: #545454;
-        border: 1px solid color($colors, secondary);
+        background: color($colors, secondary);
     }
-    .athlete-info {
-        background: #4a4a4a;
+
+    .athlete-card ion-item{
+        background: color($colors, secondary);
     }
 }

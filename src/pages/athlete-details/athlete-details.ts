@@ -16,13 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class AthleteDetailsPage {
 
   athlete: any;
+  positon: any;
+  team: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.athlete = navParams.get("athlete");
+    this.positon = navParams.get("position");
+    this.team = navParams.get("team");
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AthleteDetailsPage');
+    console.log(`Team: ${this.team.nome}`);
+    console.log(`Position: ${this.positon.nome}`);
+    
   }
 
   getFormatedImage() {

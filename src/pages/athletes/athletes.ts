@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, Content } from 'ionic-angular';
+import { updateImgs } from 'ionic-angular/components/content/content';
+import { Img } from 'ionic-angular/components/img/img-interface';
 import { CartolaProvider } from '../../providers/cartola/cartola';
 import { Observable } from 'rxjs';
 import { Athlete } from '../../models/athlete.model';
@@ -18,6 +20,9 @@ import { Athlete } from '../../models/athlete.model';
 })
 export class AthletesPage {
 
+  @ViewChild(Content) content: Content;
+
+  openedSeachbar: boolean = false;
   mercado: Observable<any>;
   isLoading: boolean = true;
   results: any;
@@ -34,6 +39,51 @@ export class AthletesPage {
   /* ionViewDidLoad() {
     console.log('ionViewDidLoad AthletesPage');
   } */
+
+
+  ngAfterViewInit(): void {
+    if (this.content) {
+      this.content.imgsUpdate = () => {
+        if (this.content._scroll.initialized && this.content._imgs.length && this.content.isImgsUpdatable()) {
+          // Reset cached bounds
+          this.content._imgs.forEach((img: Img) => (<any>img)._rect = null);
+
+          // Use global position to calculate if an img is in the viewable area
+          updateImgs(this.content._imgs, this.content._cTop * -1, this.content.contentHeight, this.content.directionY, 1400, 400);
+        }
+      };
+    }
+  }
+
+  renderDividers(record: any, recordIndex: number, records: any): any {
+    let heading: any = ['War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport',
+      'War/Adventure', 'Science Fiction/Fantasy', 'Humour', 'Sport'],
+      num: number = 0;
+
+
+    // IF this is every tenth record we want to
+    // inject the correct heading from the above
+    // array into the list to act as a divider
+    // between different comic genres
+    if (recordIndex % 10 === 0) {
+      num++;
+      return heading[num * recordIndex / 10];
+    }
+    return null;
+  }
 
   ionViewDidLoad() {
     let loader = this.loadingCtrl.create({
@@ -69,7 +119,14 @@ export class AthletesPage {
   }
 
   openDetails(athlete: any) {
-    this.navCtrl.push('AthleteDetailsPage', { athlete: athlete });
+    this.navCtrl.push('AthleteDetailsPage',
+      {
+        athlete: athlete,
+        team: this.findTeamById(athlete.clube_id),
+        position: this.findPositionById(athlete.posicao_id),
+        status: this.findStatusById(athlete.status_id)
+      }
+    );
   }
 
   getFormattedImage(foto: any) {
@@ -93,8 +150,7 @@ export class AthletesPage {
 
   findTeamById(teamId) {
     try {
-      let team = this.teams.find(team => team.id == teamId);
-      return team;
+      return this.teams.find(team => team.id == teamId);
     } catch (error) {
       console.log(error);
 
@@ -110,8 +166,7 @@ export class AthletesPage {
 
   findPositionById(posId) {
     try {
-      let pos = this.positions.find(pos => pos.id == posId);
-      return pos;
+      return this.positions.find(pos => pos.id == posId);
     } catch (error) {
       console.log(error);
 
@@ -125,17 +180,33 @@ export class AthletesPage {
       );
   }
 
+  findStatusById(statusId) {
+    try {
+      return this.status.find(status => status.id == statusId);
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  // Search
+
   filterItems(ev: any) {
     this.getAtletas();
     let val = ev.target.value;
     if (val && val.trim() !== '') {
-      this.athletes = this.athletes.filter(function(item) {
+      this.athletes = this.athletes.filter(function (item) {
         return item.apelido.toLowerCase().includes(val.toLowerCase());
       });
     }
+    return this.athletes;
   }
 
-  getAtletas(){
-    this.athletes =  this.results.atletas;
+  canceledSearch() {
+
+  }
+
+  getAtletas() {
+    this.athletes = this.results.atletas;
   }
 }
