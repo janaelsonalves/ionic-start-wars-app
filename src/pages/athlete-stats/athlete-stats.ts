@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CartolaProvider } from '../../providers/cartola/cartola';
 
 /**
  * Generated class for the AthleteStatsPage page.
@@ -17,9 +18,16 @@ export class AthleteStatsPage {
 
   openedSearchbar: boolean;
   items: string[];
+  data: any;
+  athletes: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private cartola: CartolaProvider) {
     this.getItems();
+    this.cartola.getMarketData()
+      .subscribe(data => {
+        this.data = data;
+        this.athletes = data.atletas;
+      });
   }
 
   getItems() {
@@ -50,7 +58,29 @@ export class AthleteStatsPage {
     }
   }
 
-  toggleSearchbar(){
+  getAthletes(): any {
+    this.athletes = this.data.atletas;
+    console.log(this.athletes)
+  }
+
+  filterAthletes(event: any) {
+    this.getAthletes();
+    let val = event.target.value;
+    console.log(val);
+    if (val && val.trim() != '') {
+      this.athletes = this.athletes.filter((item) => {
+        return item.apelido.toLocaleLowerCase().indexOf(val) > -1;
+      });
+    }
+    //return this.getAthletes();
+  }
+
+  onClear(event: any){
+    console.log('clear', event);
+    this.getAthletes();
+  }
+
+  toggleSearchbar() {
     this.openedSearchbar = !this.openedSearchbar;
   }
 }

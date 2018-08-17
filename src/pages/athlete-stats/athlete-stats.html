@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar color="primary">
     <ion-title *ngIf="!openedSearchbar">
@@ -19,13 +19,47 @@
     </ion-buttons>
   </ion-navbar>
 
-</ion-header>
+</ion-header> 
 
 
-<ion-content padding>
+ <ion-content padding>
   <ion-list [virtualScroll]="items" approxItemHeight="48px">
     <ion-item *virtualItem="let item">
       {{item}}
+    </ion-item>
+  </ion-list>
+  <ion-fab end>
+    <button ion-fab>
+      <ion-icon name="checkmark-circle" style="color: #ff7400"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content> -->
+
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title *ngIf="!openedSearchbar">
+      Statistic of Athlete
+    </ion-title>
+    <ion-searchbar placeholder="Filter items" *ngIf="openedSearchbar" showCancelButton="true" (ionInput)="filterAthletes($event)"
+      (ionCancel)="toggleSearchbar()" (ionClear)="onClear($event)" debounce="300"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only *ngIf="!openedSearchbar" (click)="toggleSearchbar()">
+        <ion-icon name="search" end></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list [virtualScroll]="athletes" approxItemHeight="48px">
+    <ion-item *virtualItem="let item">
+      <ion-avatar item-start>
+        <ion-img src=""></ion-img>
+      </ion-avatar>
+      {{item.apelido}}
     </ion-item>
   </ion-list>
   <ion-fab end>
